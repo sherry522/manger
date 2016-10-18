@@ -1,0 +1,43 @@
+.tableDetail label+span {
+	vertical-align: middle;
+	padding-left: 10px;
+}
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    min-width: 250px;
+    vertical-align: middle;
+    position: relative;
+}
+.table tr th:first-child {
+	min-width: 50px!important;
+}
+.table tr td:first-child {
+	min-width: 50px!important;
+}
+.table>tbody>tr.change>td {
+    background-color: #ECF0F1;
+}
+.clickTochange {
+	text-decoration: none;
+	border-bottom: dashed 1px #0088cc;
+}
+.td-input {
+	position: absolute;
+	top: -42px;
+	left: 0;
+	margin-bottom: 0;
+	background-color: #fff;
+	display: none;
+}
+.td-input > .input-group {
+	margin: 6px 10px;
+}
+.td-input button {
+	color: #fff;
+	margin-right: 10px;
+}
+.td-input > i {
+	position: absolute;
+	bottom: -9px;
+	left: 42%;
+	color: #fff;
+}

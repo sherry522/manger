@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>资料表</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/Table-info.css">
+    <!--你自己的样式文件 -->
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">        
+    <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
+    <!--[if lt IE 9]>
+    <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.js"></script>
+    <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .control-panel .form-control {
+            border-radius: 0;
+        }
+        .changTable .modal-content {
+            border-radius: 0;
+            border: 0;
+        }
+        .changTable .form-control {
+            border-radius: 0;
+        }
+    </style>
+</head>
+    <body>
+        <!-- 顶部区域 -->
+        <div class="container-fluid header-fluid-top">
+            <div class="row">
+                <div class="container header-top">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <a href="#">
+                                <img src="images/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 导航 -->
+        <div class="navbar navbar-inverse nav-fluid-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand hidden-sm" href="javascript:" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'navbar-首页'])">福克斯德</a>
+                </div>
+                <div class="navbar-collapse collapse" role="navigation">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="##" data-toggle="dropdown" class="dropdown-toggle">产品表格<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="template.html">资料表模板</a></li>
+                                <li><a href="Table-info.html">资料表</a></li>
+                                <li><a href="template-batch-list.html">批量表模板</a></li>
+                                <li><a href="Table-batch.html">批量表</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="##" data-toggle="dropdown" class="dropdown-toggle">图片<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="pic-category.html">图片库</a></li>
+                                <li><a href="pic-trash.html">回收站</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="##" data-toggle="dropdown" class="dropdown-toggle">资源<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="customer.html">客户</a></li>
+                                <li><a href="admin-category.html">产品类目</a></li>
+                                <li><a href="upcUpload.html">UPC</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="##" data-toggle="dropdown" class="dropdown-toggle">系统<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Searchlog.html">日志</a></li>
+                                <li><a href="partition.html">数据库</a></li>
+                                <li><a href="FileManager.html">文件管理器</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主内容区域 -->
+        
+        <div class="container-fluid tableInfo marginTop">
+        <!-- 操作区域 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading"><h4><b>操作</b></h4></div>
+                        <div class="panel-body">
+                            <div class="form-horizontal control-panel">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">选择搜索条件</label>
+                                    <div class="col-md-1">
+                                        <select class="form-control" v-model="type_code" readonly>
+                                            <option value="info" selected>资料表</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <select v-model="status_code" class="form-control">
+                                            <option value="" selected>表格状态</option>
+                                            <option value="creating">创建</option>
+                                            <option value="editing">编辑</option>
+                                            <option value="enabled">有效</option>
+                                            <option value="finished">完成</option>
+                                            <option value="halt">终止</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" v-model="keyword" placeholder="输入表格名" class="form-control">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button @click="searchTable" class="btn btn-default">搜索</button>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button @click="creatTable" class="btn btn-success btn-sm pull-right">创建表格</button>
+                                    </div>
+                                    <div class="col-md-1 pull-right">
+                                        <button class="btn btn-info btn-sm" @click="Reflesh">刷新</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <div class="well well-sm tableSelect">
+                <strong>选择显示</strong>
+                <div class="btn-group">
+                    <button class="btn btn-default"><i class="fa fa-th"></i>默认</button>
+                    <button class="btn btn-default"><i class="fa fa-table"></i>默认</button>
+                    <button class="btn btn-default"><i class="fa fa-th-large"></i>默认</button>
+                </div>
+            </div> -->
+            
+            <div class="alert alert-success">
+                表格数:<strong class="text-warning">{{count}}</strong>　
+                当前页:<strong class="text-warning">{{pageNow}}</strong>　
+                总页数:<strong class="text-warning">{{countPage}}</strong>　
+            </div>
+
+            <!-- 表格列表 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h4><b>资料表</b></h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tr class="success text-success">
+                                        <th class="text-center">序号</th>
+                                        <th class="text-center">名称</th>
+                                        <th class="text-center">所属类目</th>
+                                        <th class="text-center">所属模板</th>
+                                        <th class="text-center">所属客户</th>
+                                        <th class="text-center">创建时间</th>
+                                        <th class="text-center">修改时间</th>
+                                        <th class="text-center">状态</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    <!-- template渲染 -->
+                                    <template v-for="item in tableInfo">
+
+                                        <!-- 条件渲染 -->
+                                        <template v-if="$index%2==1">
+                                            <tr class="warning">
+                                                <td class="text-center">{{$index | ListNum}}</td>
+                                                <td class="text-center">{{item.title}}</td>
+                                                <td class="text-center">{{item.name}}</td>
+                                                <td class="text-center">{{item.tempname}}</td>
+                                                <td class="text-center">{{item.client_name}}</td>
+                                                <td class="text-center">{{item.created_time}}</td>
+                                                <td class="text-center">{{item.modified_time}}</td>
+                                                <td class="text-center">{{item.status_code|statusCode}}</td>
+                                                <td class="text-center">
+                                                    <a :href="item | xgBtn" v-show="item.status_code | deleteBtn" target="_blank" class="btn btn-info btn-xs">
+                                                        修改
+                                                    </a>
+                                                    <a v-show="item.status_code | editBtn" class="btn btn-success btn-xs" target="_blank" :href="item | statusLink" >编辑</a>
+                                                    <a v-show="item.status_code | prviewBtn" class="btn btn-success btn-xs" target="_blank" :href="item | statusLink" >查看</a>
+                                                    <button v-show="item.status_code | deleteBtn" v-on:click="remove(item)" class="btn btn-danger btn-xs">    删除
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                        <template v-else>
+                                            <tr>
+                                                <td class="text-center">{{$index | ListNum}}</td>
+                                                <td class="text-center">{{item.title}}</td>
+                                                <td class="text-center">{{item.name}}</td>
+                                                <td class="text-center">{{item.tempname}}</td>
+                                                <td class="text-center">{{item.client_name}}</td>
+                                                <td class="text-center">{{item.created_time}}</td>
+                                                <td class="text-center">{{item.modified_time}}</td>
+                                                <td class="text-center">{{item.status_code|statusCode}}</td>
+                                                <td class="text-center">
+                                                    <a :href="item | xgBtn" v-show="item.status_code | deleteBtn" target="_blank" class="btn btn-info btn-xs">
+                                                        修改
+                                                    </a>
+                                                    <a v-show="item.status_code | editBtn" class="btn btn-success btn-xs" target="_blank" :href="item | statusLink" >编辑</a>
+                                                    <a v-show="item.status_code | prviewBtn" class="btn btn-success btn-xs" target="_blank" :href="item | statusLink" >查看</a>
+                                                    <button v-show="item.status_code | deleteBtn" v-on:click="remove(item)" class="btn btn-danger btn-xs">    删除
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            <!-- 分页 -->
+            <div v-show="countPage>1" class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 text-center">
+                        <div class="form-inline">
+                            <button @click="goPrePage" :disabled="prePageBtn" class="btn btn-default">上一页</button>
+                            <button @click="goNextPage" :disabled="nextPageBtn" class="btn btn-default">下一页</button>
+                            <input type="number" v-model="jump" placeholder="页码" min="1" class="form-control" style="width:80px;">
+                            <button class="btn btn-info" @click="goJump" :disabled="jumpBtn">跳转</button>
+                            总页数:<strong class="text-warning">{{countPage}}</strong>　
+                            当前页:<strong class="text-warning">{{pageNow}}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="container">
+                <div class="row">
+                    <hr>
+                    <!-- <pre>{{$data|json 4}}</pre> -->
+                </div>
+            </div>
+        <!-- 页脚 -->
+        <div class="container-fluid footer-fluid">
+            <div class="contaier">
+                <div class="row">
+                    <div class="col-lg-12">
+                        © All rights reserved 深圳福克斯德信息咨询有限公司
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+        <script src="js/jquery.js"></script>
+        <script src="js/vue.js"></script>
+        <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+        <script src="js/bootstrap.min.js"></script>
+        <script src='js/layer.js'></script>
+        <script src='js/Table-info.js'></script>
+    </body>
+</html>
